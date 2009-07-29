@@ -159,7 +159,7 @@ def inspect_args(function):
 def parse_and_run_commands(namespace=None, args=None, global_options=None,
         add_dry_run_option=True, command_suffix='_command'):
     if namespace is None:
-        namespace = sys._getframe(1).f_locals
+        namespace = inspect.currentframe().f_back.f_globals
     elif type(namespace) is types.ModuleType:
         namespace = namespace.__dict__
     
