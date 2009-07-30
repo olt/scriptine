@@ -257,14 +257,14 @@ class path(_base):
         return self.__class__(os.path.join(self, *args))
 
     def splitall(self):
-        r""" Return a list of the path components in this path.
+        """ Return a list of the path components in this path.
 
         The first item in the list will be a path.  Its value will be
         either os.curdir, os.pardir, empty, or the root directory of
-        this path (for example, '/' or 'C:\\').  The other items in
+        this path (for example, ``/`` or ``C:\\``).  The other items in
         the list will be strings.
 
-        path.path.joinpath(*result) will yield the original path.
+        ``path.path.joinpath(*result)`` will yield the original path.
         """
         parts = []
         loc = self
@@ -346,11 +346,11 @@ class path(_base):
 
         The elements of the list are path objects.
         This does not walk recursively into subdirectories
-        (but see path.walkdirs).
+        (but see :meth:`path.walkdirs`).
 
-        With the optional 'pattern' argument, this only lists
+        With the optional ``pattern`` argument, this only lists
         directories whose names match the given pattern.  For
-        example, d.dirs('build-*').
+        example, ``d.dirs('build-*')``.
         """
         return [p for p in self.listdir(pattern) if p.isdir()]
 
@@ -358,11 +358,11 @@ class path(_base):
         """ D.files() -> List of the files in this directory.
 
         The elements of the list are path objects.
-        This does not walk into subdirectories (see path.walkfiles).
+        This does not walk into subdirectories (see :meth:`path.walkfiles`).
 
-        With the optional 'pattern' argument, this only lists files
+        With the optional ``pattern`` argument, this only lists files
         whose names match the given pattern.  For example,
-        d.files('*.pyc').
+        ``d.files('*.pyc')``.
         """
         
         return [p for p in self.listdir(pattern) if p.isfile()]
@@ -377,10 +377,10 @@ class path(_base):
         This performs a depth-first traversal of the directory tree.
         Each directory is returned just before all its children.
 
-        The errors= keyword argument controls behavior when an
-        error occurs.  The default is 'strict', which causes an
+        The ``errors`` keyword argument controls behavior when an
+        error occurs.  The default is ``strict``, which causes an
         exception.  The other allowed values are 'warn', which
-        reports the error via warnings.warn(), and 'ignore'.
+        reports the error via ``warnings.warn()``, and ``ignore``.
         """
         if errors not in ('strict', 'warn', 'ignore'):
             raise ValueError("invalid errors parameter")
@@ -423,15 +423,15 @@ class path(_base):
     def walkdirs(self, pattern=None, errors='strict'):
         """ D.walkdirs() -> iterator over subdirs, recursively.
 
-        With the optional 'pattern' argument, this yields only
+        With the optional ``pattern`` argument, this yields only
         directories whose names match the given pattern.  For
-        example, mydir.walkdirs('*test') yields only directories
-        with names ending in 'test'.
+        example, ``mydir.walkdirs('*test')`` yields only directories
+        with names ending in ``test``.
 
-        The errors= keyword argument controls behavior when an
-        error occurs.  The default is 'strict', which causes an
-        exception.  The other allowed values are 'warn', which
-        reports the error via warnings.warn(), and 'ignore'.
+        The ``errors`` keyword argument controls behavior when an
+        error occurs.  The default is ``strict``, which causes an
+        exception.  The other allowed values are ``warn``, which
+        reports the error via ``warnings.warn()``, and ``ignore``.
         """
         if errors not in ('strict', 'warn', 'ignore'):
             raise ValueError("invalid errors parameter")
@@ -459,9 +459,9 @@ class path(_base):
     def walkfiles(self, pattern=None, errors='strict'):
         """ D.walkfiles() -> iterator over files in D, recursively.
 
-        The optional argument, pattern, limits the results to files
+        The optional argument, ``pattern``, limits the results to files
         with names that match the pattern.  For example,
-        mydir.walkfiles('*.tmp') yields only files with the .tmp
+        ``mydir.walkfiles('*.tmp')`` yields only files with the ``.tmp``
         extension.
         """
         if errors not in ('strict', 'warn', 'ignore'):
@@ -505,10 +505,10 @@ class path(_base):
                     yield f
 
     def fnmatch(self, pattern):
-        """ Return True if self.name matches the given pattern.
+        """ Return True if path matches the given pattern.
 
         pattern - A filename pattern with wildcards,
-            for example '*.py'.
+            for example ``*.py``.
         """
         return fnmatch.fnmatch(self.name, pattern)
 
@@ -517,7 +517,7 @@ class path(_base):
 
         pattern - a path relative to this directory, with wildcards.
 
-        For example, path('/users').glob('*/bin/*') returns a list
+        For example, ``path('/users').glob('*/bin/*')`` returns a list
         of all the files users have in their bin directories.
         """
         cls = self.__class__
@@ -887,24 +887,28 @@ class path(_base):
     def utime(self, times):
         """ Set the access and modified times of this file. """
         os.utime(self, times)
+    utime.__doc__ = os.utime.__doc__
 
     @dry_guard
     def chmod(self, mode):
         os.chmod(self, mode)
+    chmod.__doc__ = os.chmod.__doc__
 
     if hasattr(os, 'chown'):
         @dry_guard
         def chown(self, uid, gid):
             os.chown(self, uid, gid)
+        chown.__doc__ = os.chown.__doc__
 
     @dry_guard
     def rename(self, new):
         os.rename(self, new)
+    rename.__doc__ = os.rename.__doc__
 
     @dry_guard
     def renames(self, new):
         os.renames(self, new)
-
+    renames.__doc__ = os.renames.__doc__
 
     # --- Create/delete operations on directories
 
@@ -1016,7 +1020,8 @@ class path(_base):
     # --- contextmanagers
     try:
         from contextlib import contextmanager
-        
+        from scriptine.misc import decorator
+        contextmanager = decorator(contextmanager)
         @contextmanager
         def as_working_dir(self):
             current_dir = path(os.curdir).abspath()
