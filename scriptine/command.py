@@ -156,8 +156,19 @@ def inspect_args(function):
         optional_args.reverse()
     return args, optional_args
 
-def parse_and_run_commands(namespace=None, args=None, global_options=None,
+def run(namespace=None, args=None, global_options=None,
         add_dry_run_option=True, command_suffix='_command'):
+    """
+    Parse and run commands.
+    
+    Will search ``namespace`` for functions that end with ``command_suffix``.
+    
+    :param namespace: the namespace/module to search for commands
+    :param args: the arguments for the command parser. defaults to
+        :data:`sys.argv`
+    :param command_suffix: function name suffix that indicates that a
+        function is a command.
+    """
     if namespace is None:
         namespace = inspect.currentframe().f_back.f_globals
     elif type(namespace) is types.ModuleType:
@@ -174,8 +185,6 @@ def parse_and_run_commands(namespace=None, args=None, global_options=None,
     function = namespace[command_name + command_suffix]
     parse_and_run_function(function, args, command_name, global_options,
         add_dry_run_option=add_dry_run_option)
-
-run = parse_and_run_commands
 
 def print_help(namespace, command_suffix, global_options):
     commands = []

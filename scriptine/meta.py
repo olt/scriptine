@@ -21,4 +21,4 @@ if __name__ == '__main__':
     import sys
     if sys.argv[0] is None:
         sys.argv[0] = 'python -m scriptine.meta'
-    scriptine.parse_and_run_commands(globals())
+    scriptine.run()
