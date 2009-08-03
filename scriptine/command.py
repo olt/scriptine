@@ -3,6 +3,7 @@ import types
 import inspect
 import re
 import optparse
+from collections import defaultdict
 from textwrap import wrap
 
 from scriptine import misc
@@ -112,6 +113,12 @@ def fetch_all(arg_name):
         return cmd
     return _fetch_all
 
+def group(name):
+    def _group(cmd):
+        cmd.group = name
+        return cmd
+    return _group
+
 def parse_global_options(args, global_options):
     parser = NonStrictOptionParser(add_help_option=False)
     parser.add_options(global_options)
@@ -187,13 +194,15 @@ def run(namespace=None, args=None, global_options=None,
         add_dry_run_option=add_dry_run_option)
 
 def print_help(namespace, command_suffix, global_options):
-    commands = []
+    group_commands = defaultdict(list)
     for func_name, func in namespace.iteritems():
         if func_name.endswith(command_suffix):
+            func = namespace[func_name]
+            group = getattr(func, 'group', None)
             command_name = func_name[:-len(command_suffix)].replace('_', '-')
-            commands.append((command_name, func.__doc__))
+            group_commands[group].append((command_name, func.__doc__))
     
-    if not commands:
+    if not group_commands:
         print 'no commands found in', sys.argv[0]
         return
     
@@ -203,7 +212,17 @@ def print_help(namespace, command_suffix, global_options):
         parser.add_options(global_options)
     parser.print_help()
     
-    print '\nCommands:'
+    default_commands = group_commands.pop(None, None)
+    if default_commands:
+        print_commands(None, default_commands)
+    for group_name, commands in group_commands.iteritems():
+        print_commands(group_name, commands)
+
+def print_commands(group_name, commands):
+    if group_name:
+        print '\n%s commands:' % group_name.title()
+    else:
+        print '\nCommands:'
     cmd_len = max(len(cmd) for cmd, _ in commands)
     for cmd, doc in commands:
         if doc is not None:
