@@ -1,2 +1,6 @@
+.DS_Store
+_build
 .zip
 .pyc
+dist
+scriptine.egg-info
