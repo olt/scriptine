@@ -8,19 +8,19 @@ L_MARK = 1
 L_WARN = 2
 L_ERROR = 3
 
-_level = 0
+_level = 1
 
-def inc_log_level():
+def inc_log_level(n=1):
     global _level
-    _level -= 1
+    _level -= n
 
-def dec_log_level():
+def dec_log_level(n=1):
     global _level
-    _level += 1
-    
+    _level += n
+
 def log(msg, *args):
-    print msg % args
-    sys.stdout.flush()
+    print >>sys.stderr, msg % args
+    sys.stderr.flush()
 
 def mark(msg, *args):
     if _level <= L_MARK:
