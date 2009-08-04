@@ -6,7 +6,7 @@ import optparse
 from collections import defaultdict
 from textwrap import wrap
 
-from scriptine import misc
+from scriptine import misc, log
 
 _global_options = None
 
@@ -15,7 +15,8 @@ def global_options():
     return _global_options
 
 def parse_and_run_function(function, args=None, command_name=None,
-        global_options=None, add_dry_run_option=True):
+        global_options=None, add_dry_run_option=True,
+        add_verbosity_option=True):
     #TODO refactor me, I'm too long
     if args is None:
         args = sys.argv
@@ -75,6 +76,12 @@ def parse_and_run_function(function, args=None, command_name=None,
         parser.add_option('--dry-run', '-n', dest='dry_run', default=False,
             action='store_true', help='don\'t actually do anything')
     
+    if add_verbosity_option:
+        parser.add_option('--verbose', '-v', dest='verbose',
+            action='count', help='be more verbose')
+        parser.add_option('--quite', '-q', dest='quite',
+            action='count', help='be more silent')
+    
     if global_options:
         if '--help' in args or '-h' in args:
             group = optparse.OptionGroup(parser, 'Global options')
@@ -85,8 +92,15 @@ def parse_and_run_function(function, args=None, command_name=None,
     
     (options, args) = parser.parse_args(args)
     
+    if add_verbosity_option:
+        verbosity = (options.verbose or 0) - (options.quite or 0)
+        log.inc_log_level(verbosity)
+    
+    
     if add_dry_run_option and options.dry_run:
         misc.options.dry = True
+        log.inc_log_level(1)
+        log.warn('running in dry-mode. don\'t actually do anything')
     
     args = args[1:]
     if len(args) < len(required_args):
@@ -164,7 +178,8 @@ def inspect_args(function):
     return args, optional_args
 
 def run(namespace=None, args=None, global_options=None,
-        add_dry_run_option=True, command_suffix='_command'):
+        add_dry_run_option=True, add_verbosity_option=True,
+        command_suffix='_command'):
     """
     Parse and run commands.
     
@@ -191,7 +206,8 @@ def run(namespace=None, args=None, global_options=None,
     command_name = args.pop(1).replace('-', '_')
     function = namespace[command_name + command_suffix]
     parse_and_run_function(function, args, command_name, global_options,
-        add_dry_run_option=add_dry_run_option)
+        add_dry_run_option=add_dry_run_option,
+        add_verbosity_option=add_verbosity_option)
 
 def print_help(namespace, command_suffix, global_options):
     group_commands = defaultdict(list)
