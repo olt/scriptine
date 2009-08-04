@@ -964,7 +964,6 @@ class path(_base):
             os.symlink(self, newlink)
 
     if hasattr(os, 'readlink'):
-        @dry_guard
         def readlink(self):
             """ Return the path to which this symbolic link points.
 
@@ -972,7 +971,6 @@ class path(_base):
             """
             return self.__class__(os.readlink(self))
 
-        @dry_guard
         def readlinkabs(self):
             """ Return the path to which this symbolic link points.
 
