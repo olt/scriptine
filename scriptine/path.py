@@ -1018,8 +1018,6 @@ class path(_base):
     # --- contextmanagers
     try:
         from contextlib import contextmanager
-        from scriptine.misc import decorator
-        contextmanager = decorator(contextmanager)
         @contextmanager
         def as_working_dir(self):
             current_dir = path(os.curdir).abspath()
