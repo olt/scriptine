@@ -1,24 +1,11 @@
 from __future__ import with_statement
+import sys
 from scriptine import run
 from contextlib import contextmanager
 try:
     from cStringIO import StringIO
 except ImportError:
     from StringIO import StringIO
-
-import sys
-class SysExitError(Exception):
-    pass
-
-_sys_exit = sys.exit
-
-def setup_module():
-    def mock_exit(status):
-        raise SysExitError()
-    sys.exit = mock_exit
-
-def teardown_module():
-    sys.exit = _sys_exit
 
 state = set()
 
@@ -53,7 +40,7 @@ def test_foo2():
     with stdout_capture() as (stdout, stderr):
         try:
             run(args=['test_command.py', 'foo2'])
-        except SysExitError:
+        except SystemExit:
             pass
         else:
             assert False, 'did not exit'
@@ -65,5 +52,3 @@ def test_foo2():
 def test_foo2_w_arg():
     run(args=['test_command.py', 'foo2', 'buzz'])
     assert 'foo2_command_called_with_buzz' in state
-
-    
