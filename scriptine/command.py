@@ -76,6 +76,8 @@ def parse_and_run_function(function, args=None, command_name=None,
         parser.add_option('--dry-run', '-n', dest='dry_run', default=False,
             action='store_true', help='don\'t actually do anything')
     
+    if getattr(function, 'no_verbosity', False):
+        add_verbosity_option = False
     if add_verbosity_option:
         parser.add_option('--verbose', '-v', dest='verbose',
             action='count', help='be more verbose')
@@ -115,6 +117,10 @@ def parse_and_run_function(function, args=None, command_name=None,
 
 def no_help(cmd):
     cmd.no_help = True
+    return cmd
+
+def no_verbosity(cmd):
+    cmd.no_verbosity = True
     return cmd
 
 def non_strict(cmd):

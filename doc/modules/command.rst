@@ -18,6 +18,9 @@ These decorators set options on command functions.
     
     Disable the ``--help`` option for this command.
 
+.. function:: no_verbosity
+    
+    Disable the ``--verbose`` and ``--quite`` options for this command.
 
 .. function:: non_strict
     
