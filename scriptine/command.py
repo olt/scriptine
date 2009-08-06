@@ -32,7 +32,11 @@ def parse_and_run_function(function, args=None, command_name=None,
     usage += '[options] ' + ' '.join(required_args)
     
     if func_doc:
-        usage += '\n\n' + '\n'.join(wrap(func_doc.strip().split('\n')[0], 60))
+        first_paragraph = re.findall('(.*?)((\n[ \t]*\n)|$)', func_doc,
+            re.DOTALL)[0][0]
+        first_paragraph = ' '.join(l.strip() for l in
+            first_paragraph.split('\n'))
+        usage += '\n\n' + '\n'.join(wrap(first_paragraph, 60))
     
     if set(required_args).intersection(params_doc.keys()):
         usage += '\n\nRequired arguments:'
