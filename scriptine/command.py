@@ -8,15 +8,8 @@ from textwrap import wrap
 
 from scriptine import misc, log
 
-_global_options = None
-
-def global_options():
-    global _global_options
-    return _global_options
-
 def parse_and_run_function(function, args=None, command_name=None,
-        global_options=None, add_dry_run_option=True,
-        add_verbosity_option=True):
+        add_dry_run_option=True, add_verbosity_option=True):
     #TODO refactor me, I'm too long
     if args is None:
         args = sys.argv
@@ -88,14 +81,6 @@ def parse_and_run_function(function, args=None, command_name=None,
         parser.add_option('--quite', '-q', dest='quite',
             action='count', help='be more silent')
     
-    if global_options:
-        if '--help' in args or '-h' in args:
-            group = optparse.OptionGroup(parser, 'Global options')
-            group.add_options(global_options)
-            parser.add_option_group(group)
-        else:
-            args = parse_global_options(args, global_options)
-    
     (options, args) = parser.parse_args(args)
     
     if add_verbosity_option:
@@ -143,14 +128,6 @@ def group(name):
         return cmd
     return _group
 
-def parse_global_options(args, global_options):
-    parser = NonStrictOptionParser(add_help_option=False)
-    parser.add_options(global_options)
-    (options, args) = parser.parse_args(args)
-    global _global_options
-    _global_options = options
-    return args
-
 class NonStrictOptionParser(optparse.OptionParser):
     def _process_args(self, largs, rargs, values):
         while rargs:
@@ -187,9 +164,8 @@ def inspect_args(function):
         optional_args.reverse()
     return args, optional_args
 
-def run(namespace=None, args=None, global_options=None,
-        add_dry_run_option=True, add_verbosity_option=True,
-        command_suffix='_command'):
+def run(namespace=None, args=None, command_suffix='_command',
+        add_dry_run_option=True, add_verbosity_option=True):
     """
     Parse and run commands.
     
@@ -210,16 +186,16 @@ def run(namespace=None, args=None, global_options=None,
         args = sys.argv
     
     if len(args) < 2 or args[1] in ('-h', '--help'):
-        print_help(namespace, command_suffix, global_options)
+        print_help(namespace, command_suffix)
         return
     
     command_name = args.pop(1).replace('-', '_')
     function = namespace[command_name + command_suffix]
-    parse_and_run_function(function, args, command_name, global_options,
+    parse_and_run_function(function, args, command_name,
         add_dry_run_option=add_dry_run_option,
         add_verbosity_option=add_verbosity_option)
 
-def print_help(namespace, command_suffix, global_options):
+def print_help(namespace, command_suffix):
     group_commands = defaultdict(list)
     for func_name, func in namespace.iteritems():
         if func_name.endswith(command_suffix):
@@ -234,8 +210,6 @@ def print_help(namespace, command_suffix, global_options):
     
     usage = 'usage: %prog command [options]'
     parser = optparse.OptionParser(usage)
-    if global_options:
-        parser.add_options(global_options)
     parser.print_help()
     
     default_commands = group_commands.pop(None, None)

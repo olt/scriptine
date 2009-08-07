@@ -1,5 +1,5 @@
 from scriptine.path import path
-from scriptine.command import run, global_options
+from scriptine.command import run
 
 __version__ = '0.0.6'
 
