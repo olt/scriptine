@@ -9,6 +9,13 @@ class DistutilsCommand(Command):
     def initialize_options(self): pass
     def finalize_options(self): pass
 
+def dict_to_options(d):
+    d = Options(d)
+    for k, v in d.iteritems():
+        if isinstance(v, dict):
+            d[k] = dict_to_options(v)
+    return d
+
 class Options(dict):
     """
     Dictionary with attribute style access.
