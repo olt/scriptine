@@ -1,5 +1,5 @@
-:mod:`scriptine.path` -- framework for paster create templates
-======================================================================
+:mod:`scriptine.path` -- work with files and directories
+========================================================
 
 Module Contents
 ---------------
@@ -32,9 +32,9 @@ Operations on path
 .. autoattribute:: path.ext
 .. autoattribute:: path.drive
 .. automethod:: path.expand
-.. automethod:: path._get_namebase
-.. automethod:: path._get_ext
-.. automethod:: path._get_drive
+.. .. automethod:: path._get_namebase
+.. .. automethod:: path._get_ext
+.. .. automethod:: path._get_drive
 .. automethod:: path.splitpath
 .. automethod:: path.splitdrive
 .. automethod:: path.splitext
@@ -86,7 +86,6 @@ Querying the filesystem
 .. automethod:: path.access
 .. automethod:: path.stat
 .. automethod:: path.lstat
-.. automethod:: path.get_owner
 .. automethod:: path.statvfs
 .. automethod:: path.pathconf
 

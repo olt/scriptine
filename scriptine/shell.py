@@ -4,7 +4,10 @@ import subprocess
 @dry_guard
 def call(command):
     """
-    Call `command`.
+    Call `command`. `command` should be a list of the executable and
+    all arguments.
+    
+    >>> call(['some_command', '-v', some_argument]) # doctest: +SKIP
     
     :returns: return code of the command
     """
@@ -13,7 +16,10 @@ def call(command):
 @dry_guard
 def sh(command):
     """
-    Call `command` in a new shell.
+    Call `command` in a new shell. `command` should be a string with
+    all arguments.
+    
+    >>> call('some_command -v arg') # doctest: +SKIP
     
     :returns: return code of the command
     """
