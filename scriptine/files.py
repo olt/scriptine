@@ -1,6 +1,9 @@
 from scriptine import path, log
 import tarfile
 
+import warnings
+warnings.warn('scriptine.file module is still in development and will be changed')
+
 class file_collection(object):
     def __init__(self):
         self.files = []
