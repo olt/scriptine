@@ -19,7 +19,7 @@ Date:    7 Mar 2004
 
 import unittest
 import codecs, os, random, shutil, tempfile, time, stat, sys
-from scriptine.path import path, __version__ as path_version
+from scriptine._path import path, __version__ as path_version
 
 # This should match the version of path.py being tested.
 __version__ = '2.2'

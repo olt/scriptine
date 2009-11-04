@@ -1,4 +1,4 @@
-from scriptine.path import path
+from scriptine._path import path
 from scriptine.command import run
 
 __version__ = '0.0.6'

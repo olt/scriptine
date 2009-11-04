@@ -4,7 +4,7 @@
 Module Contents
 ---------------
 
-.. module:: scriptine.path
+.. module:: scriptine
 
 .. class:: path
 
