@@ -205,12 +205,12 @@ def print_help(namespace, command_suffix):
             group_commands[group].append((command_name, func.__doc__))
     
     if not group_commands:
-        print 'no commands found in', sys.argv[0]
+        print >>sys.stderr, 'no commands found in', sys.argv[0]
         return
     
     usage = 'usage: %prog command [options]'
     parser = optparse.OptionParser(usage)
-    parser.print_help()
+    parser.print_help(sys.stderr)
     
     default_commands = group_commands.pop(None, None)
     if default_commands:
@@ -220,16 +220,16 @@ def print_help(namespace, command_suffix):
 
 def print_commands(group_name, commands):
     if group_name:
-        print '\n%s commands:' % group_name.title()
+        print >>sys.stderr, '\n%s commands:' % group_name.title()
     else:
-        print '\nCommands:'
+        print >>sys.stderr, '\nCommands:'
     cmd_len = max(len(cmd) for cmd, _ in commands)
     for cmd, doc in commands:
         if doc is not None:
             doc = doc.strip().split('\n')[0]
         else:
             doc = ''
-        print ('  %-' + str(cmd_len) + 's  %s') % (cmd, doc)
+        print >>sys.stderr, ('  %-' + str(cmd_len) + 's  %s') % (cmd, doc)
 
 def parse_rst_params(doc):
     """
