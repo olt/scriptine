@@ -1,0 +1,5 @@
+include setup.py
+include setup.cfg
+
+recursive-include doc *.py *.bat Makefile *.rst
+recursive-include tests *.*
