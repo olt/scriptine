@@ -167,6 +167,10 @@ class TempDirTestCase(unittest.TestCase):
             fobj.close()
 
             time.sleep(sleep_time)
+            
+            f_new = d / 'test_new.txt'
+            f_new.touch()
+            self.assert_(f_new.newer(f))
             t2 = time.time() - sleep_time / 2
             f.touch()
             t3 = time.time() + sleep_time / 2

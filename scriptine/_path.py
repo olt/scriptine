@@ -812,6 +812,10 @@ class path(_base):
     atime = os.path.getatime
     mtime = os.path.getmtime
     ctime = os.path.getctime
+    
+    def newer(self, other):
+        return self.mtime > other.mtime
+    
     size = os.path.getsize
     
     if hasattr(os, 'access'):

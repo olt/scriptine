@@ -82,6 +82,7 @@ Querying the filesystem
 .. automethod:: path.atime()
 .. automethod:: path.mtime()
 .. automethod:: path.ctime()
+.. automethod:: path.newer
 .. automethod:: path.size()
 .. automethod:: path.access
 .. automethod:: path.stat
