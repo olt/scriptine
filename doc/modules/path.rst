@@ -79,10 +79,10 @@ Querying the filesystem
 .. automethod:: path.islink()
 .. automethod:: path.ismount()
 .. automethod:: path.samefile(other)
-.. autoattribute:: path.atime
-.. autoattribute:: path.mtime
-.. autoattribute:: path.ctime
-.. autoattribute:: path.size
+.. automethod:: path.atime()
+.. automethod:: path.mtime()
+.. automethod:: path.ctime()
+.. automethod:: path.size()
 .. automethod:: path.access
 .. automethod:: path.stat
 .. automethod:: path.lstat

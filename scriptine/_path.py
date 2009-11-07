@@ -809,23 +809,11 @@ class path(_base):
         samefile = os.path.samefile
 
     
-    atime = property(
-        os.path.getatime, None, None,
-        """ Last access time of the file. """)
+    atime = os.path.getatime
+    mtime = os.path.getmtime
+    ctime = os.path.getctime
+    size = os.path.getsize
     
-    mtime = property(
-        os.path.getmtime, None, None,
-        """ Last-modified time of the file. """)
-
-    if hasattr(os.path, 'getctime'):
-        ctime = property(
-            os.path.getctime, None, None,
-            """ Creation time of the file. """)
-
-    size = property(
-        os.path.getsize, None, None,
-        """ Size of the file, in bytes. """)
-
     if hasattr(os, 'access'):
         def access(self, mode):
             """ Return true if current user has access to this path.
@@ -842,7 +830,7 @@ class path(_base):
         """ Like path.stat(), but do not follow symbolic links. """
         return os.lstat(self)
 
-    def _get_owner(self):
+    def owner(self):
         r""" Return the name of the owner of this file or directory.
 
         This follows symbolic links.
@@ -864,10 +852,6 @@ class path(_base):
             st = self.stat()
             return pwd.getpwuid(st.st_uid).pw_name
 
-    owner = property(
-        _get_owner, None, None,
-        _get_owner.__doc__)
-    del _get_owner
 
     if hasattr(os, 'statvfs'):
         def statvfs(self):
