@@ -16,7 +16,7 @@ Module Contents
 
 Operations on path
 ^^^^^^^^^^^^^^^^^^
-.. automethod:: path.getcwd
+.. automethod:: path.cwd
 .. automethod:: path.isabs
 .. automethod:: path.abspath
 .. automethod:: path.normcase

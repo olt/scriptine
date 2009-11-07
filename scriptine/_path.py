@@ -128,10 +128,10 @@ class path(_base):
     
     __rtruediv__ = __rdiv__
     
-    def getcwd(cls):
+    @classmethod
+    def cwd(cls):
         """ Return the current working directory as a path object. """
         return cls(_getcwd())
-    getcwd = classmethod(getcwd)
 
 
     # --- Operations on path strings.
