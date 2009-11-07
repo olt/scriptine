@@ -113,7 +113,7 @@ class BasicTestCase(unittest.TestCase):
         self.assertEqual(path(os.curdir).abspath(), os.getcwd())
 
         # .getcwd()
-        cwd = path.getcwd()
+        cwd = path.cwd()
         self.assert_(isinstance(cwd, path))
         self.assertEqual(cwd, os.getcwd())
 
@@ -155,10 +155,10 @@ class TempDirTestCase(unittest.TestCase):
         try:
             self.assert_(f.exists())
             self.assert_(f.isfile())
-            self.assertEqual(f.size, 0)
-            self.assert_(t0 <= f.mtime <= t1)
+            self.assertEqual(f.size(), 0)
+            self.assert_(t0 <= f.mtime() <= t1)
             if hasattr(os.path, 'getctime'):
-                ct = f.ctime
+                ct = f.ctime()
                 self.assert_(t0 <= ct <= t1)
 
             time.sleep(sleep_time)
@@ -175,10 +175,10 @@ class TempDirTestCase(unittest.TestCase):
 
             self.assert_(f.exists())
             self.assert_(f.isfile())
-            self.assertEqual(f.size, 10)
-            self.assert_(t2 <= f.mtime <= t3)
+            self.assertEqual(f.size(), 10)
+            self.assert_(t2 <= f.mtime() <= t3)
             if hasattr(os.path, 'getctime'):
-                ct2 = f.ctime
+                ct2 = f.ctime()
                 if os.name == 'nt':
                     # On Windows, "ctime" is CREATION time
                     self.assertEqual(ct, ct2)
@@ -186,7 +186,7 @@ class TempDirTestCase(unittest.TestCase):
                 else:
                     # On other systems, it might be the CHANGE time 
                     # (especially on Unix, time of inode changes)
-                    self.failUnless(ct == ct2 or ct2 == f.mtime)
+                    self.failUnless(ct == ct2 or ct2 == f.mtime())
         finally:
             f.remove()
 
