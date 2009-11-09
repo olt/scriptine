@@ -1,0 +1,11 @@
+Changelog
+~~~~~~~~~
+
+0.2.0a1 (2009-11-09)
+  * renamed path.getcwd to path.cwd
+  * converted properties to methods for values that might
+    change (e.g. size, mtimes, etc)
+  * add path.newer method
+
+0.1.0 (2009-11-05)
+  * first release

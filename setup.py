@@ -15,7 +15,7 @@ options = scriptine.misc.Options(
     author = "Oliver Tonnhofer",
     author_email = "olt@omniscale.de",
     description = 'python shell scripts made easy',
-    # long_description=open('README.txt').read() +'\n' + open('CHANGELOG.txt').read(),
+    long_description=open('README.txt').read() +'\n' + open('CHANGELOG.txt').read(),
     license = 'MIT License',
     classifiers=[
       'License :: OSI Approved :: MIT License',
