@@ -21,7 +21,7 @@ def parse_and_run_function(function, args=None, command_name=None,
     
     usage = 'usage: %prog '
     if command_name is not None:
-        usage += command_name + ' '
+        usage += command_name.replace('_', '-') + ' '
     usage += '[options] ' + ' '.join(required_args)
     
     if func_doc:
