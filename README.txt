@@ -83,10 +83,10 @@ A more complex example::
         """
         outdir = path(outdir)
         if not outdir.exists(): outdir.makedirs()
+        log.mark('converting %s/*.%s to %s/*.png', dirname, extension, outdir)
         for f in path(dirname).files('*.'+extension):
             outfile = outdir / f.namebase + '.png'
             if not outfile.exists() or f.newer(outfile):
-                log.info('converting %s to %s', f, outfile)
                 call(['convert', f, outfile])
 
     if __name__ == '__main__':
@@ -114,8 +114,11 @@ The help text::
 And the result::
 
     % python convert.py to-png ~/images/ --extension gif
-    /Users/olt/images/foo.gif out/foo.png
-    /Users/olt/images/bar.gif out/bar.png
+    ---> converting /Users/olt/images/*.gif to out/*.png
+    % python convert.py to-png ~/images/ --extension gif -v
+    ---> converting /Users/olt/images/*.gif to out/*.png
+    INFO: call ['convert', '/Users/olt/images/foo.gif', 'out/foo.png']
+    INFO: call ['convert', '/Users/olt/images/bar.gif', 'out/foo.png']
 
 Documentation
 ~~~~~~~~~~~~~
