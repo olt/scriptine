@@ -1006,6 +1006,13 @@ class path(_base):
         from contextlib import contextmanager
         @contextmanager
         def as_working_dir(self):
+            """
+            temporarily change into this directory
+            
+            >>> with path('/').as_working_dir():
+            ...     assert path.cwd() == '/'
+            >>> assert path.cwd() != '/'
+            """
             current_dir = path(os.curdir).abspath()
             os.chdir(self)
             try:
