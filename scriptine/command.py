@@ -20,7 +20,7 @@ def parse_and_run_function(function, args=None, command_name=None,
     params_doc = parse_rst_params(func_doc)
     
     usage = 'usage: %prog '
-    if command_name is not None:
+    if command_name:
         usage += command_name.replace('_', '-') + ' '
     usage += '[options] ' + ' '.join(required_args)
     
@@ -194,6 +194,11 @@ def run(namespace=None, args=None, command_suffix='_command',
     parse_and_run_function(function, args, command_name,
         add_dry_run_option=add_dry_run_option,
         add_verbosity_option=add_verbosity_option)
+
+def cmd(function, args=None):
+    if args is None:
+        args = sys.argv
+    parse_and_run_function(function, args, '',)
 
 def print_help(namespace, command_suffix):
     group_commands = defaultdict(list)
