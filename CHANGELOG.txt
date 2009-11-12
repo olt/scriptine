@@ -1,5 +1,7 @@
 Changelog
 ~~~~~~~~~
+0.2.0a2 (2009-11-11)
+  * fixed missing files in MANIFEST.in
 
 0.2.0a1 (2009-11-09)
   * renamed path.getcwd to path.cwd
