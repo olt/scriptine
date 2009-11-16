@@ -1,7 +1,8 @@
 Changelog
 ~~~~~~~~~
-0.2.0a3dev (2009-11-xx)
+0.2.0a3 (2009-11-16)
   * new command.cmd function for scripts with only one command
+  * added command.autocmds as a replacement for run
 
 0.2.0a2 (2009-11-11)
   * fixed missing files in MANIFEST.in

@@ -164,7 +164,7 @@ def inspect_args(function):
         optional_args.reverse()
     return args, optional_args
 
-def run(namespace=None, args=None, command_suffix='_command',
+def autocmds(namespace=None, args=None, command_suffix='_command',
         add_dry_run_option=True, add_verbosity_option=True):
     """
     Parse and run commands.
@@ -194,6 +194,8 @@ def run(namespace=None, args=None, command_suffix='_command',
     parse_and_run_function(function, args, command_name,
         add_dry_run_option=add_dry_run_option,
         add_verbosity_option=add_verbosity_option)
+
+run = autocmds
 
 def cmd(function, args=None):
     if args is None:
