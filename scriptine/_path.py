@@ -800,10 +800,14 @@ class path(_base):
     # --- Methods for querying the filesystem.
 
     exists = os.path.exists
-    isdir = os.path.isdir
     isfile = os.path.isfile
     islink = os.path.islink
     ismount = os.path.ismount
+
+    def isdir(self):
+        # isdir is a built-in on windows, need to wrap
+        return os.path.isdir(self)
+    isdir.__doc__ = os.path.isdir.__doc__
 
     if hasattr(os.path, 'samefile'):
         samefile = os.path.samefile
