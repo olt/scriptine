@@ -122,12 +122,12 @@ class path(_base):
 
     # Make the / operator work even when true division is enabled.
     __truediv__ = __div__
-    
+
     def __rdiv__(self, rel):
         return self.__class__(os.path.join(rel, self))
-    
+
     __rtruediv__ = __rdiv__
-    
+
     @classmethod
     def cwd(cls):
         """ Return the current working directory as a path object. """
@@ -364,7 +364,7 @@ class path(_base):
         whose names match the given pattern.  For example,
         ``d.files('*.pyc')``.
         """
-        
+
         return [p for p in self.listdir(pattern) if p.isfile()]
 
     def walk(self, pattern=None, errors='strict'):
@@ -537,7 +537,7 @@ class path(_base):
             return f.read()
         finally:
             f.close()
-    
+
     def write_bytes(self, bytes, append=False):
         """ Open this file and write the given bytes to it.
 
@@ -554,7 +554,7 @@ class path(_base):
                 f.write(bytes)
             finally:
                 f.close()
-        
+
         dry("write_bytes %s '%.20s...' append=%r" % (self, bytes, append),
             _write_bytes, bytes, append)
 
@@ -777,9 +777,9 @@ class path(_base):
 
     def read_md5(self, hex=False):
         """ Calculate the md5 hash for this file.
-        
+
         hex - Return the digest as hex string.
-        
+
         This reads through the entire file.
         """
         f = self.open('rb')
@@ -808,16 +808,16 @@ class path(_base):
     if hasattr(os.path, 'samefile'):
         samefile = os.path.samefile
 
-    
+
     atime = os.path.getatime
     mtime = os.path.getmtime
     ctime = os.path.getctime
-    
+
     def newer(self, other):
         return self.mtime > other.mtime
-    
+
     size = os.path.getsize
-    
+
     if hasattr(os, 'access'):
         def access(self, mode):
             """ Return true if current user has access to this path.
@@ -868,7 +868,7 @@ class path(_base):
 
 
     # --- Modifying operations on files and directories
-    
+
     @dry_guard
     def utime(self, times):
         """ Set the access and modified times of this file. """
@@ -905,6 +905,14 @@ class path(_base):
     @dry_guard
     def makedirs(self, mode=0777):
         os.makedirs(self, mode)
+
+    @dry_guard
+    def ensure_dir(self, mode=0777):
+        """
+        Make sure the directory exists, create if necessary.
+        """
+        if not self.exists() or not self.isdir():
+            os.makedirs(self, mode)
 
     @dry_guard
     def rmdir(self):
@@ -980,9 +988,9 @@ class path(_base):
     if hasattr(shutil, 'move'):
         move = dry_guard(shutil.move)
     rmtree = dry_guard(shutil.rmtree)
-    
+
     # --- Convenience for scriptine
-    
+
     @dry_guard
     def install(self, to, chmod=0644):
         """
@@ -1000,7 +1008,7 @@ class path(_base):
     if hasattr(os, 'startfile'):
         def startfile(self):
             os.startfile(self)
-    
+
     # --- contextmanagers
     try:
         from contextlib import contextmanager
@@ -1008,7 +1016,7 @@ class path(_base):
         def as_working_dir(self):
             """
             temporarily change into this directory
-            
+
             >>> with path('/').as_working_dir():
             ...     assert path.cwd() == '/'
             >>> assert path.cwd() != '/'
