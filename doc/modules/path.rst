@@ -104,6 +104,7 @@ Create/delete directories
 .. automethod:: path.makedirs
 .. automethod:: path.rmdir
 .. automethod:: path.removedirs
+.. automethod:: path.ensure_dir
 
 Modify files
 ^^^^^^^^^^^^
