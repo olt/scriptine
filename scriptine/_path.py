@@ -555,7 +555,7 @@ class path(_base):
             finally:
                 f.close()
 
-        dry("write_bytes %s '%.20s...' append=%r" % (self, bytes, append),
+        dry("write_bytes %s '%r...' append=%r" % (self, bytes[:20], append),
             _write_bytes, bytes, append)
 
     def text(self, encoding=None, errors='strict'):
