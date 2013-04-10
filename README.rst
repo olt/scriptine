@@ -10,7 +10,7 @@ The primary goal of ``scriptine`` is to make it easy to write shell scripts
 with python.
 
 Scriptine does two things to solve this goal:
- 
+
 * Make it easy to create scripts and commands.
 * Make it easy to work with files, directories and other shell commands.
 
@@ -40,7 +40,7 @@ Example
 Here is a small example script::
 
     import scriptine
-    
+
     def example_command(name, countdown=False, repeat=10):
         """Show how scriptine works."""
         if countdown:
@@ -53,7 +53,7 @@ Here is a small example script::
 
 Usage of our small script::
 
-    % python test.py 
+    % python test.py
     Usage: test.py command [options]
 
     Options:
@@ -65,7 +65,7 @@ Usage of our small script::
     Hello, Pete!
     % python test.py example Pete --countdown --repeat 5
     5 4 3 2 1 Hello, Pete!
-    
+
 
 A more complex example::
 
@@ -76,7 +76,7 @@ A more complex example::
         """
         Convert all files with extension in dirname to .png.
         Only convert if result does not exists or is older.
-        
+
         :param dirname: where to search for images
         :param outdir: where to store the results
         :param extension: file extension to convert
@@ -93,7 +93,7 @@ A more complex example::
         run()
 
 The help text::
-    
+
     % python convert.py to-png  --help
     Usage: test.py to-png [options] dirname
 
@@ -128,5 +128,5 @@ The documentation can be found at http://packages.python.org/scriptine/
 Development
 ~~~~~~~~~~~
 
-scriptine is still in development. Some parts will be changed and some more functionality will be added. Follow the development at http://bitbucket.org/olt/scriptine/ Comments and bug fixes are welcomed.
+Follow the development at https://github.com/olt/scriptine Comments and bug fixes are welcomed.
 

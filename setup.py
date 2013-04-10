@@ -17,6 +17,7 @@ options = scriptine.misc.Options(
     description = 'python shell scripts made easy',
     long_description=open('README.rst').read() +'\n' + open('CHANGELOG.txt').read(),
     license = 'MIT License',
+    url = 'https://github.com/olt/scriptine',
     classifiers=[
       'License :: OSI Approved :: MIT License',
       'Programming Language :: Python',
