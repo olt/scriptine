@@ -1,5 +1,11 @@
 Changelog
 ~~~~~~~~~
+
+0.2.0 (2013-04-10)
+  * improve handling of binary data in write_bytes
+  * fixed path.isdir on windows
+  * add path.ensure_dir
+
 0.2.0a3 (2009-11-16)
   * new command.cmd function for scripts with only one command
   * added command.autocmds as a replacement for run
