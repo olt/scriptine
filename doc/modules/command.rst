@@ -20,7 +20,7 @@ These decorators set options on command functions.
 
 .. function:: no_verbosity
     
-    Disable the ``--verbose`` and ``--quite`` options for this command.
+    Disable the ``--verbose`` and ``--quiet`` options for this command.
 
 .. function:: non_strict
     

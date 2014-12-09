@@ -61,7 +61,7 @@ Features
     * Automatic command parsing
     * Automatic help text (``--help``)
 
-* Log handling (with ``-v``, ``--verbose`` and ``-q``, ``--quite`` handling)
+* Log handling (with ``-v``, ``--verbose`` and ``-q``, ``--quiet`` handling)
 
 * Testing scripts in `dry-mode`. All destructive functions/methods are wrapped and will
   not be called when the ``-n`` or ``--dry-run`` option is set.
