@@ -78,13 +78,13 @@ def parse_and_run_function(function, args=None, command_name=None,
     if add_verbosity_option:
         parser.add_option('--verbose', '-v', dest='verbose',
             action='count', help='be more verbose')
-        parser.add_option('--quite', '-q', dest='quite',
+        parser.add_option('--quiet', '-q', dest='quiet',
             action='count', help='be more silent')
     
     (options, args) = parser.parse_args(args)
     
     if add_verbosity_option:
-        verbosity = (options.verbose or 0) - (options.quite or 0)
+        verbosity = (options.verbose or 0) - (options.quiet or 0)
         log.inc_log_level(verbosity)
     
     
