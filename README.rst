@@ -1,5 +1,7 @@
-scriptine - Python shell scripting made easy
-============================================
+DEPRECATED scriptine - Python shell scripting made easy
+=======================================================
+
+*scriptine is no longer maintained*
 
 :Author: Oliver Tonnhofer <olt@bogosoft.com>
 
